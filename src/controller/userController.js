@@ -1,9 +1,8 @@
 const userModel = require("../model/userModel");
-const mongoose = require("mongoose");
 const aws =require("aws-sdk")
 const jwt = require('jsonwebtoken')
-const { AppConfig } = require('aws-sdk');
-const { isValidName, isValidEmail, isValidPhone, isValidN,isValidPassword, isValidObjectId, isValidRequestBody, isValid, isValidAddress,isValidPincode } = require("../validator/validator");
+ const { AppConfig } = require('aws-sdk');
+const { isValidName, isValidEmail, isValidPhone,isValidPassword, isValidObjectId, isValidRequestBody, isValid,isValidPincode } = require("../validator/validator");
 const bcrypt = require('bcrypt')
 
 
@@ -109,11 +108,6 @@ const createUser=async function(req,res){
               .send({ status: "false", message: "city must be present" });
           }
           let pinn = parseInt(address.shipping.pincode)
-        //   if (!isValidN(pinn)) {
-        //     return res
-        //       .status(400)
-        //       .send({ status: "false", message: "shipping pincode must be IN number" });
-        //   }
         
          if(!pinn){
             return res
@@ -160,12 +154,6 @@ const createUser=async function(req,res){
             .send({ status: "false", message: "billing must be present and in digits!!!" });
        
          }
-
-        //   if (!isValidN(address.billing.pincode)) {
-        //    return res
-        //       .status(400)
-        //       .send({ status: "false", message: "pincode must be present" });
-        //   }
           if(!isValidName(address.billing.street)) {
              return res
               .status(400)
@@ -176,11 +164,6 @@ const createUser=async function(req,res){
               .status(400)
               .send({ status: "false", message: "city should be in alphabetical order" });
           }
-        //   if (!isValidN(address.billing.pincode)) {
-        //     return res
-        //       .status(400)
-        //       .send({ status: "false", message: "billing pincode must be IN number" });
-        //   }
           if(!isValidPincode(pin)) {
            return res
               .status(400)
@@ -244,11 +227,10 @@ const loginUser = async function (req, res) {
     }
 }
 
-const getUserProfile = async (req, res) => {
+const getUserProfile = async function(req, res){
 
     try {
         let userId = req.params.userId
-        console.log("controller 11",userId)
         let userIdFromToken = req.tokenId 
 
 
@@ -310,7 +292,6 @@ const updateUser = async function(req,res){
       
        
         if(Object.keys(req.body).length<1&&req.files=== undefined)  return res.status(400).send({status:false,msg:"Enter data to update"})
-        // if(req.files.length==0) return res.status(400).send({status:false,msg:"Enter what you want to update"})
         if(!isValidName(fname)) return res.status(400).send({status:false,msg:"enter valid firstname"})
       if(!isValidName(lname)) return res.status(400).send({status:false,msg:"enter valid lastname"})
         

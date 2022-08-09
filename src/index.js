@@ -1,6 +1,5 @@
 const express=require('express')
 const multer=require('multer')
-const aws=require('aws-sdk')
 const mongoose=require('mongoose')
 const route = require('./routes/route')
 const bodyParser = require('body-parser')
